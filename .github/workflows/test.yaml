@@ -1,8 +1,16 @@
 name: comment test
 
-on: issue_comment
+on: pull_request
 
 jobs:
+  dump-github-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        continue-on-error: true
+        run: echo '${{ toJSON(github) }}'
+
   comment-test:
     runs-on: ubuntu-latest
     if: |
