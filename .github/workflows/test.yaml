@@ -5,6 +5,7 @@ on: pull_request
 jobs:
   dump-github-context:
     runs-on: ubuntu-latest
+    if: contains(github.event.*.labels.*.name, 'preview:pr')
     steps:
       - name: Dump GitHub context
         id: github_context_step
