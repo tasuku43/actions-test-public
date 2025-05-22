@@ -1,8 +1,17 @@
 name: comment test
 
-on: issue_comment
+on: pull_request
 
 jobs:
+  dump-github-context:
+    runs-on: ubuntu-latest
+    if: contains(github.event.*.labels.*.name, 'preview:pr')
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        continue-on-error: true
+        run: echo '${{ toJSON(github) }}'
+
   comment-test:
     runs-on: ubuntu-latest
     if: |
@@ -27,7 +36,7 @@ jobs:
     if: |
       github.event.issue.pull_request &&
       startsWith(github.event.comment.body, '/preview') &&
-      contains(github.event.issue.labels.*.name, 'preview:pr')
+      contains(github.event.*.labels.*.name, 'preview:pr')
     steps:
       - run: echo ${{ join(github.event.issue.labels.*.name, ' ') }}
       - run: echo ${{ join(github.event.issue.labels.*.name, ',') }}
