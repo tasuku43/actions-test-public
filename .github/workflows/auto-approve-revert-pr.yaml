@@ -1,0 +1,34 @@
+name: Auto Approve Revert PR
+
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - develop
+
+jobs:
+  auto-approve-revert:
+    runs-on: ubuntu-latest
+    if: |
+        startsWith(github.event.pull_request.title, 'Revert') ||
+        startsWith(github.event.pull_request.title, 'revert') ||
+        contains(github.event.pull_request.title, 'Revert "') ||
+        contains(github.event.pull_request.title, 'revert "')
+    steps:
+      - name: Auto approve revert PR
+        uses: juliangruber/approve-pull-request-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.pull_request.number }}
+
+      - name: Add comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🤖 This revert PR has been automatically approved for the develop branch.'
+            })
