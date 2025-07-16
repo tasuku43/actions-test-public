@@ -10,6 +10,17 @@ jobs:
         id: github_context_step
         continue-on-error: true
         run: echo '${{ toJSON(github) }}'
+      - name: Send repository dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: repository_dispatch
+          client-payload: |
+            {
+              "title": "Test PR",
+              "release-role": "prod",
+            }
 
   comment-test:
     runs-on: ubuntu-latest
