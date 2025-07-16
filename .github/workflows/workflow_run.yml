@@ -21,3 +21,5 @@ jobs:
       run: |
         PR_NUMBER=${{ join(github.event.workflow_run.pull_requests.*.number, '') }}
         BASE_BRANCH="${{ join(github.event.workflow_run.pull_requests.*.base.ref, '') }}"
+        
+        echo "PR #$PR_NUMBER targeting $BASE_BRANCH"
