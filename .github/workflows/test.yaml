@@ -1,6 +1,6 @@
 name: comment test
 
-on: pull_request
+on: push
 
 jobs:
   dump-github-context:
