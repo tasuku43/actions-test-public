@@ -4,6 +4,10 @@ on:
   workflow_run:
     workflows:
       - "test.yaml"
+    types:
+    - completed
+    branches:
+      - 'workflow_run_*'
 
 jobs:
   dump:

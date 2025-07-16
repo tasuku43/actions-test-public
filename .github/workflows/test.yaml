@@ -1,6 +1,6 @@
 name: test.yaml
 
-on: push
+on: pull_request
 
 jobs:
   dump-github-context:
