@@ -16,11 +16,7 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: repository_dispatch
-          client-payload: |
-            {
-              "title": "Test PR",
-              "release-role": "prod",
-            }
+          client-payload: '{ "title": "Test PR", "release-role": "prod" }'
 
   comment-test:
     runs-on: ubuntu-latest
