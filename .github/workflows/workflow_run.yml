@@ -1,0 +1,25 @@
+name: workflow_run.yml
+
+on:
+  workflow_run:
+    workflows:
+      - "test.yaml"
+    types:
+      - completed
+    branches:
+      - 'workflow_run_*'
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump GitHub context
+      id: github_context_step
+      continue-on-error: true
+      run: echo '${{ toJSON(github) }}'
+    - name: test
+      run: |
+        PR_NUMBER=${{ join(github.event.workflow_run.pull_requests.*.number, '') }}
+        BASE_BRANCH="${{ join(github.event.workflow_run.pull_requests.*.base.ref, '') }}"
+        
+        echo "PR #$PR_NUMBER targeting $BASE_BRANCH"
