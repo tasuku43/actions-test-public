@@ -3,7 +3,7 @@ name: workflow_run.yml
 on:
   workflow_run:
     workflows:
-      - "comment test"
+      - "test.yaml"
 
 jobs:
   dump:
