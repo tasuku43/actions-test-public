@@ -1,0 +1,11 @@
+name: gh version on ubuntu-slim
+
+on:
+  push:
+
+jobs:
+  gh-version:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Show gh version
+        run: gh --version
